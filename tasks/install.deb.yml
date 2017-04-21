@@ -2,7 +2,7 @@
 
 - name: redis-install | Add repository
   apt_repository: repo={{redis_ppa}} update_cache=yes
-  when: "{{ redis_ppa is defined }}"
+  when: redis_ppa is defined
 
 - name: redis-install | Install Redis
   apt: pkg={{item}}
