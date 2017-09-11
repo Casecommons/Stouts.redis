@@ -15,6 +15,12 @@
   template: src=redis.conf.j2 dest={{redis_configuration}}
   notify:
    - redis restart
+  register: redis_reconfigured
+
+- name: Ensure the redis started
+  service: name={{redis_service}} state=restarted enabled=yes
+  changed_when: false
+  when: redis_reconfigured
 
 - name: redis-configure | Set the kernel parameter for vm overcommit
   sysctl: name=vm.overcommit_memory value=1 state=present
